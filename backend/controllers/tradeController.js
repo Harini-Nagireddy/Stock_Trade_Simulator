@@ -32,7 +32,7 @@ exports.getMarketData = async (req, res) => {
     });
     res.json(market);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -85,7 +85,7 @@ exports.buyStock = async (req, res) => {
       walletBalance: user.walletBalance
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -124,7 +124,7 @@ exports.sellStock = async (req, res) => {
       walletBalance: user.walletBalance
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -161,6 +161,6 @@ exports.getPortfolio = async (req, res) => {
       profitLoss: parseFloat((currentValue - totalInvestment).toFixed(2))
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };

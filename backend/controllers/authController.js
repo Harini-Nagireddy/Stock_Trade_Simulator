@@ -24,7 +24,7 @@ exports.signup = async (req, res) => {
       user: { id: newUser._id, name: newUser.name, email: newUser.email, walletBalance: newUser.walletBalance }
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -48,7 +48,7 @@ exports.login = async (req, res) => {
       user: { id: user._id, name: user.name, email: user.email, walletBalance: user.walletBalance }
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -58,6 +58,6 @@ exports.getProfile = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json(user);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };

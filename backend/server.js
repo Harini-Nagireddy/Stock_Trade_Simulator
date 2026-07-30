@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 
 dotenv.config();
@@ -16,6 +17,17 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
+
+// Fail fast with a clear message if the DB isn't connected yet, instead of
+// letting requests hang for ~10s on Mongoose's internal buffering timeout.
+app.use("/api", (req, res, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({
+      message: "Database not connected. Check your MongoDB Atlas connection (IP whitelist, cluster status, or network).",
+    });
+  }
+  next();
+});
 
 // Routes
 app.use("/api/auth", require("./routes/authRoutes"));

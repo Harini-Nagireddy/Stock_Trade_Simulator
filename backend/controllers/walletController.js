@@ -6,7 +6,7 @@ exports.getWallet = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
     res.json({ walletBalance: user.walletBalance, name: user.name, email: user.email });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -22,6 +22,6 @@ exports.addFunds = async (req, res) => {
 
     res.json({ message: `✅ Added $${amount} to wallet`, walletBalance: user.walletBalance });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
