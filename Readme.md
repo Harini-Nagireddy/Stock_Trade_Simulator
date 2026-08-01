@@ -1,14 +1,14 @@
 # 📈 TradeSim - Stock Trading Simulator
 
-A full-stack stock trading simulator built using the MERN Stack that allows users to practice paper trading with virtual funds. Users can buy and sell stocks, track their portfolio, monitor market prices, and analyze investment performance through an interactive dashboard.
+A full-stack **MERN Stack** stock trading simulator that enables users to practice paper trading with virtual funds. Users can securely register, log in, buy and sell stocks, manage their portfolio, monitor simulated live market prices, and analyze investment performance through an interactive dashboard.
 
 ---
 
 ## 🚀 Live Demo
 
-**Frontend:** Coming Soon
+🌐 **Frontend:** https://YOUR-VERCEL-URL.vercel.app
 
-**Backend API:** Coming Soon
+⚙️ **Backend API:** https://YOUR-RENDER-URL.onrender.com
 
 ---
 
@@ -46,19 +46,19 @@ A full-stack stock trading simulator built using the MERN Stack that allows user
 
 # ✨ Features
 
-- User Authentication (JWT)
-- Secure Login & Registration
-- Virtual Trading Wallet
-- Buy Stocks
-- Sell Stocks
-- Live Market Prices
-- Portfolio Management
-- Profit & Loss Tracking
-- Investment Analytics
-- Portfolio Allocation Charts
-- Holdings Table
-- Responsive UI
-- MongoDB Database Integration
+- 🔐 JWT Authentication
+- 👤 Secure User Registration & Login
+- 💰 Virtual Trading Wallet ($10,000 Initial Balance)
+- 📈 Buy Stocks
+- 📉 Sell Stocks
+- 📊 Live Simulated Market Prices
+- 💼 Portfolio Management
+- 📋 Holdings Table
+- 📉 Profit & Loss Tracking
+- 📊 Investment Analytics
+- 📱 Responsive User Interface
+- ☁️ MongoDB Atlas Database Integration
+- 🌐 Cloud Deployment using Render & Vercel
 
 ---
 
@@ -69,9 +69,9 @@ A full-stack stock trading simulator built using the MERN Stack that allows user
 - React.js
 - Vite
 - Tailwind CSS
-- React Router
+- React Router DOM
 - Axios
-- Recharts
+- React Hot Toast
 
 ## Backend
 
@@ -82,26 +82,32 @@ A full-stack stock trading simulator built using the MERN Stack that allows user
 - JWT Authentication
 - bcrypt.js
 
+## Deployment
+
+- Vercel
+- Render
+
 ---
 
 # 📂 Project Structure
 
-```
+```text
 TradeSim
 │
 ├── backend
+│   ├── config
 │   ├── controllers
 │   ├── middleware
 │   ├── models
 │   ├── routes
-│   ├── config
 │   ├── server.js
 │   └── package.json
 │
 ├── frontend
-│   ├── src
 │   ├── public
-│   └── package.json
+│   ├── src
+│   ├── package.json
+│   └── vite.config.js
 │
 ├── screenshots
 ├── README.md
@@ -115,12 +121,10 @@ TradeSim
 ## Clone Repository
 
 ```bash
-git clone https://github.com/Harini-Nagireddy/TradeSim.git
+git clone https://github.com/Harini-Nagireddy/Stock_Trade_Simulator.git
 ```
 
----
-
-## Backend
+## Backend Setup
 
 ```bash
 cd backend
@@ -128,9 +132,7 @@ npm install
 npm run dev
 ```
 
----
-
-## Frontend
+## Frontend Setup
 
 ```bash
 cd frontend
@@ -142,38 +144,46 @@ npm run dev
 
 # 🔐 Environment Variables
 
-Create a `.env` file inside the backend folder.
+### Backend (`backend/.env`)
 
 ```env
-MONGO_URI=YOUR_MONGODB_URI
+MONGO_URI=YOUR_MONGODB_CONNECTION_STRING
 JWT_SECRET=YOUR_SECRET_KEY
 PORT=5000
 ```
 
+### Frontend (`frontend/.env`)
+
+```env
+VITE_API_URL=https://YOUR-RENDER-BACKEND.onrender.com
+```
+
 ---
 
-# 📊 Modules
+# 📊 Application Modules
 
 - Authentication
 - Dashboard
-- Market
+- Live Market
 - Portfolio
 - Wallet
 - Buy Stocks
 - Sell Stocks
-- Analytics
+- Investment Analytics
 
 ---
 
-# 🎯 Future Enhancements
+# 🚀 Future Enhancements
 
-- Real-time Stock API Integration
-- Watchlist Feature
-- Portfolio Export
-- Trading History Reports
-- Email Notifications
-- Dark/Light Theme
-- Admin Dashboard
+- 📡 Real-Time Stock API Integration
+- ⭐ Watchlist Feature
+- 📜 Transaction History
+- 📥 Portfolio Export (PDF/Excel)
+- 📧 Email Notifications
+- 🌙 Dark / Light Theme
+- 📈 Advanced Stock Charts
+- 🤖 AI Investment Insights
+- 👨‍💼 Admin Dashboard
 
 ---
 
@@ -181,12 +191,14 @@ PORT=5000
 
 **Harini Nagireddy**
 
-B.Tech - Computer Science (Data Science)
+🎓 B.Tech – Computer Science (Data Science)
 
-GitHub: https://github.com/Harini-Nagireddy
+**GitHub:** https://github.com/Harini-Nagireddy
 
-LinkedIn: https://www.linkedin.com/in/harini-nagireddy-95aa65356
+**LinkedIn:** https://www.linkedin.com/in/harini-nagireddy-95aa65356
 
 ---
 
-## ⭐ If you like this project, consider giving it a star!
+## ⭐ Support
+
+If you found this project useful, please consider giving it a ⭐ on GitHub.
