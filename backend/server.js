@@ -8,25 +8,35 @@ dotenv.config();
 
 const app = express();
 
-// Connect to MongoDB
+// Connect MongoDB
 connectDB();
 
+// ===============================
 // Allowed Frontend URLs
+// ===============================
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://stock-trade-simulator-murex.vercel.app" // <-- Replace with your Vercel URL
+  "https://stock-trade-simulator-murex.vercel.app",
+  "https://stock-trade-simulator-git-main-harini-f65c.vercel.app",
+  "https://stock-trade-simulator-7ddj4swaa-harini-f65c.vercel.app"
 ];
 
-// Middleware
+// ===============================
+// CORS
+// ===============================
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow Postman, curl, etc.
-      if (!origin) return callback(null, true);
+    origin: (origin, callback) => {
+      // Allow Postman / curl
+      if (!origin) {
+        return callback(null, true);
+      }
 
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
+
+      console.log("Blocked by CORS:", origin);
 
       return callback(new Error("CORS not allowed"));
     },
@@ -36,23 +46,29 @@ app.use(
 
 app.use(express.json());
 
-// Check MongoDB Connection
+// ===============================
+// MongoDB Connection Check
+// ===============================
 app.use("/api", (req, res, next) => {
   if (mongoose.connection.readyState !== 1) {
     return res.status(503).json({
-      message:
-        "Database not connected. Check your MongoDB Atlas connection.",
+      message: "Database not connected.",
     });
   }
+
   next();
 });
 
+// ===============================
 // Routes
+// ===============================
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/trade", require("./routes/tradeRoutes"));
 app.use("/api/wallet", require("./routes/walletRoutes"));
 
+// ===============================
 // Health Check
+// ===============================
 app.get("/", (req, res) => {
   res.json({
     message: "TradeSim API is running 🚀",

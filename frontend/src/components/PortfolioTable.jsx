@@ -2,6 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
+import API from '../api'
 
 export default function PortfolioTable({ stocks, onUpdate }) {
   const [selling, setSelling] = useState(null)
@@ -14,7 +15,7 @@ export default function PortfolioTable({ stocks, onUpdate }) {
     if (isNaN(q) || q <= 0 || q > maxQty) return toast.error(`Enter a number between 1 and ${maxQty}`)
     setSelling(symbol)
     try {
-      const { data } = await axios.post('/api/trade/sell', { symbol, quantity: q })
+      const { data } = await API.post('/api/trade/sell', { symbol, quantity: q })
       toast.success(data.message)
       updateWallet(data.walletBalance)
       onUpdate?.()
