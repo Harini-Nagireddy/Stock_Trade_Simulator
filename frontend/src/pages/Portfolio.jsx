@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import axios from 'axios'
+import API from "../api";
 import { Doughnut, Bar } from 'react-chartjs-2'
 import {
   Chart as ChartJS, ArcElement, Tooltip, Legend,
@@ -19,7 +19,7 @@ export default function Portfolio() {
   const fetch = useCallback(async () => {
     setLoading(true)
     try {
-      const { data } = await axios.get('/api/trade/portfolio')
+      const { data } = await API.post('/api/auth/login', form);
       setPortfolio(data)
     } catch (e) {}
     finally { setLoading(false) }

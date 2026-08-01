@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import axios from 'axios'
+import API from "../api";
 import { Line, Doughnut } from 'react-chartjs-2'
 import {
   Chart as ChartJS, CategoryScale, LinearScale, PointElement,
@@ -52,7 +52,7 @@ export default function Dashboard() {
 
   const fetchPortfolio = useCallback(async () => {
     try {
-      const { data } = await axios.get('/api/trade/portfolio')
+      const { data } = await API.get('/api/trade/portfolio')
       setPortfolio(data)
     } catch (e) {
       console.error(e)
@@ -63,7 +63,7 @@ export default function Dashboard() {
 
   const fetchTicker = useCallback(async () => {
     try {
-      const { data } = await axios.get('/api/trade/market')
+      const { data } = await API.get('/api/trade/market')
       setTicker(data)
     } catch (e) {}
   }, [])

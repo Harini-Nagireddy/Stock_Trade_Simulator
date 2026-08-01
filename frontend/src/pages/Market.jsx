@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import API from "../api";
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
 
@@ -14,7 +14,7 @@ export default function Market() {
 
   const fetchMarket = async () => {
     try {
-      const { data } = await axios.get('/api/trade/market')
+      const { data } = await API.post('/api/auth/login', form);
       setMarket(data)
     } catch (e) {
       toast.error('Failed to load market data')
@@ -33,7 +33,7 @@ export default function Market() {
     if (!qty || qty <= 0) return toast.error('Enter valid quantity')
     setBuying(true)
     try {
-      const { data } = await axios.post('/api/trade/buy', { symbol, quantity: parseInt(qty) })
+      const { data } = await API.post('/api/trade/buy', { symbol, quantity: parseInt(qty) })
       toast.success(data.message)
       updateWallet(data.walletBalance)
       setBuySymbol(null)

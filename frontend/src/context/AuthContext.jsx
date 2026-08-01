@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import axios from 'axios'
+import API from '../api'
 
 const AuthContext = createContext(null)
 
@@ -10,27 +10,35 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      API.defaults.headers.common['Authorization'] = `Bearer ${token}`
+
       const saved = localStorage.getItem('user')
-      if (saved) setUser(JSON.parse(saved))
+      if (saved) {
+        setUser(JSON.parse(saved))
+      }
     }
+
     setLoading(false)
   }, [token])
 
   const login = (userData, userToken) => {
     setUser(userData)
     setToken(userToken)
+
     localStorage.setItem('token', userToken)
     localStorage.setItem('user', JSON.stringify(userData))
-    axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`
+
+    API.defaults.headers.common['Authorization'] = `Bearer ${userToken}`
   }
 
   const logout = () => {
     setUser(null)
     setToken(null)
+
     localStorage.removeItem('token')
     localStorage.removeItem('user')
-    delete axios.defaults.headers.common['Authorization']
+
+    delete API.defaults.headers.common['Authorization']
   }
 
   const updateWallet = (balance) => {
@@ -40,7 +48,9 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, logout, updateWallet }}>
+    <AuthContext.Provider
+      value={{ user, token, loading, login, logout, updateWallet }}
+    >
       {children}
     </AuthContext.Provider>
   )

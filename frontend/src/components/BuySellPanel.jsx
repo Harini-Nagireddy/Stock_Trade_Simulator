@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import axios from 'axios'
+import API from "../api";
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
 
@@ -17,7 +17,7 @@ export default function BuySellPanel({ onTradeComplete }) {
     setLoading(true)
     try {
       const endpoint = mode === 'buy' ? '/api/trade/buy' : '/api/trade/sell'
-      const { data } = await axios.post(endpoint, { symbol, quantity: parseInt(quantity) })
+      const { data } = await API.post(endpoint, { symbol, quantity: parseInt(quantity) })
       toast.success(data.message)
       updateWallet(data.walletBalance)
       setQuantity('')

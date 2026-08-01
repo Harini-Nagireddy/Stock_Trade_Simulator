@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import API from "../api";
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
 
@@ -16,7 +16,7 @@ export default function Signup() {
     if (form.password.length < 6) return toast.error('Password must be 6+ characters')
     setLoading(true)
     try {
-      const { data } = await axios.post('/api/auth/signup', form)
+      const { data } = await API.post('/api/auth/signup', form);
       login(data.user, data.token)
       toast.success(`Account created! Welcome, ${data.user.name}! 🚀`)
       navigate('/dashboard')

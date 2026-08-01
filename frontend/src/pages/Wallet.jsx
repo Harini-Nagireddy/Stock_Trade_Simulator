@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import API from "../api";
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
 import StatCard from '../components/StatCard'
@@ -13,16 +13,21 @@ export default function Wallet() {
   const [portfolio, setPortfolio] = useState(null)
 
   useEffect(() => {
-    axios.get('/api/trade/portfolio').then(r => setPortfolio(r.data)).catch(() => {})
+    API.get('/api/trade/portfolio')
+      .then(r => setPortfolio(r.data))
+      .catch(() => {})
   }, [])
 
   const handleAdd = async () => {
     const amt = parseFloat(amount)
     if (!amt || amt <= 0) return toast.error('Enter a valid amount')
     if (amt > 100000) return toast.error('Max deposit is $100,000')
+
     setLoading(true)
+
     try {
-      const { data } = await axios.post('/api/wallet/add', { amount: amt })
+      const { data } = await API.post('/api/wallet/add', { amount: amt })
+
       toast.success(data.message)
       updateWallet(data.walletBalance)
       setAmount('')
@@ -42,22 +47,45 @@ export default function Wallet() {
         <p className="text-dark-500 text-sm mt-0.5">Manage your virtual trading funds</p>
       </div>
 
-      {/* Summary */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard title="Available Cash" value={`$${(user?.walletBalance||0).toFixed(2)}`} sub="Ready to invest" icon="💵" color="green" />
-        <StatCard title="Invested" value={`$${(portfolio?.currentValue||0).toFixed(2)}`} sub="In the market" icon="📊" color="purple" />
-        <StatCard title="Total Assets" value={`$${totalAssets.toFixed(2)}`} sub="Cash + portfolio" icon="🏦" color="blue" />
+        <StatCard
+          title="Available Cash"
+          value={`$${(user?.walletBalance || 0).toFixed(2)}`}
+          sub="Ready to invest"
+          icon="💵"
+          color="green"
+        />
+
+        <StatCard
+          title="Invested"
+          value={`$${(portfolio?.currentValue || 0).toFixed(2)}`}
+          sub="In the market"
+          icon="📊"
+          color="purple"
+        />
+
+        <StatCard
+          title="Total Assets"
+          value={`$${totalAssets.toFixed(2)}`}
+          sub="Cash + portfolio"
+          icon="🏦"
+          color="blue"
+        />
       </div>
 
-      {/* Add Funds Card */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="card">
-          <h3 className="text-white font-bold text-lg mb-1">Add Virtual Funds</h3>
-          <p className="text-dark-500 text-sm mb-5">Top up your balance to continue trading</p>
 
-          {/* Preset buttons */}
+        <div className="card">
+          <h3 className="text-white font-bold text-lg mb-1">
+            Add Virtual Funds
+          </h3>
+
+          <p className="text-dark-500 text-sm mb-5">
+            Top up your balance to continue trading
+          </p>
+
           <div className="grid grid-cols-4 gap-2 mb-4">
-            {PRESETS.map(p => (
+            {PRESETS.map((p) => (
               <button
                 key={p}
                 onClick={() => setAmount(String(p))}
@@ -73,66 +101,115 @@ export default function Wallet() {
           </div>
 
           <div className="relative mb-4">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-dark-500 font-semibold">$</span>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-dark-500 font-semibold">
+              $
+            </span>
+
             <input
               type="number"
               placeholder="Custom amount"
               className="input pl-8"
               value={amount}
-              onChange={e => setAmount(e.target.value)}
+              onChange={(e) => setAmount(e.target.value)}
             />
           </div>
 
-          <button onClick={handleAdd} disabled={loading} className="btn-primary w-full">
+          <button
+            onClick={handleAdd}
+            disabled={loading}
+            className="btn-primary w-full"
+          >
             {loading ? (
               <span className="flex items-center justify-center gap-2">
-                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"/>
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 Adding funds...
               </span>
-            ) : `Add ${amount ? `$${amount}` : 'Funds'} to Wallet`}
+            ) : (
+              `Add ${amount ? `$${amount}` : 'Funds'} to Wallet`
+            )}
           </button>
 
-          <p className="text-dark-500 text-xs text-center mt-3">Max single deposit: $100,000</p>
+          <p className="text-dark-500 text-xs text-center mt-3">
+            Max single deposit: $100,000
+          </p>
         </div>
 
-        {/* Balance Overview */}
         <div className="card">
-          <h3 className="text-white font-bold text-lg mb-5">Balance Overview</h3>
+          <h3 className="text-white font-bold text-lg mb-5">
+            Balance Overview
+          </h3>
+
           <div className="space-y-4">
+
             <div className="flex items-center justify-between p-4 rounded-xl bg-dark-700 border border-dark-600">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-brand-500/15 flex items-center justify-center text-xl">💵</div>
+                <div className="w-10 h-10 rounded-xl bg-brand-500/15 flex items-center justify-center text-xl">
+                  💵
+                </div>
+
                 <div>
-                  <p className="text-white font-semibold text-sm">Cash Balance</p>
-                  <p className="text-dark-500 text-xs">Available to trade</p>
+                  <p className="text-white font-semibold text-sm">
+                    Cash Balance
+                  </p>
+
+                  <p className="text-dark-500 text-xs">
+                    Available to trade
+                  </p>
                 </div>
               </div>
-              <p className="text-brand-400 font-bold text-lg">${(user?.walletBalance||0).toFixed(2)}</p>
+
+              <p className="text-brand-400 font-bold text-lg">
+                ${(user?.walletBalance || 0).toFixed(2)}
+              </p>
             </div>
 
             <div className="flex items-center justify-between p-4 rounded-xl bg-dark-700 border border-dark-600">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-purple-500/15 flex items-center justify-center text-xl">📈</div>
+                <div className="w-10 h-10 rounded-xl bg-purple-500/15 flex items-center justify-center text-xl">
+                  📈
+                </div>
+
                 <div>
-                  <p className="text-white font-semibold text-sm">Portfolio Value</p>
-                  <p className="text-dark-500 text-xs">Current market value</p>
+                  <p className="text-white font-semibold text-sm">
+                    Portfolio Value
+                  </p>
+
+                  <p className="text-dark-500 text-xs">
+                    Current market value
+                  </p>
                 </div>
               </div>
-              <p className="text-purple-400 font-bold text-lg">${(portfolio?.currentValue||0).toFixed(2)}</p>
+
+              <p className="text-purple-400 font-bold text-lg">
+                ${(portfolio?.currentValue || 0).toFixed(2)}
+              </p>
             </div>
 
             <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-brand-500/10 to-purple-500/10 border border-brand-500/20">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 flex items-center justify-center text-xl">🏦</div>
+                <div className="w-10 h-10 rounded-xl bg-yellow-500/15 flex items-center justify-center text-xl">
+                  🏦
+                </div>
+
                 <div>
-                  <p className="text-white font-semibold text-sm">Net Worth</p>
-                  <p className="text-dark-500 text-xs">Cash + investments</p>
+                  <p className="text-white font-semibold text-sm">
+                    Net Worth
+                  </p>
+
+                  <p className="text-dark-500 text-xs">
+                    Cash + investments
+                  </p>
                 </div>
               </div>
-              <p className="text-yellow-400 font-bold text-lg">${totalAssets.toFixed(2)}</p>
+
+              <p className="text-yellow-400 font-bold text-lg">
+                ${totalAssets.toFixed(2)}
+              </p>
             </div>
+
           </div>
         </div>
+
       </div>
     </div>
   )

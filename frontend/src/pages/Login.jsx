@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import API from "../api";
 import toast from 'react-hot-toast'
 import { useAuth } from '../context/AuthContext'
 
@@ -15,7 +15,7 @@ export default function Login() {
     if (!form.email || !form.password) return toast.error('Fill all fields')
     setLoading(true)
     try {
-      const { data } = await axios.post('/api/auth/login', form)
+      await API.post('/api/auth/login', form);
       login(data.user, data.token)
       toast.success(`Welcome back, ${data.user.name}! 🎉`)
       navigate('/dashboard')
