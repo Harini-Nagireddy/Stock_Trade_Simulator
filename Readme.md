@@ -6,7 +6,7 @@ A full-stack **MERN Stack** stock trading simulator that enables users to practi
 
 ## 🚀 Live Demo
 
-🌐 **Frontend:** [TradeSim Live Demo](stock-trade-simulator-murex.vercel.app)
+🌐 **Frontend:** stock-trade-simulator-murex.vercel.app
 
 ⚙️ **Backend API:** [TradeSim Backend API]https://stock-trade-simulator-backend.onrender.com
 
